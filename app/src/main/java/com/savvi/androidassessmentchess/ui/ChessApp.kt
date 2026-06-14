@@ -27,6 +27,8 @@ fun ChessApp(
 ) {
 
     val boardSize by viewModel.boardSize.collectAsState()
+    val startPosition by viewModel.startPosition.collectAsState()
+    val endPosition by viewModel.endPosition.collectAsState()
 
     Scaffold(
         topBar = {
@@ -64,7 +66,10 @@ fun ChessApp(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ){
             ChessBoard(
-                boardSize = boardSize
+                boardSize = boardSize,
+                startPosition = startPosition,
+                endPosition = endPosition,
+                onCellClicked = {row, col -> viewModel.onCellClicked(row,col)}
             )
 
             Settings(

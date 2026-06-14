@@ -11,10 +11,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.savvi.androidassessmentchess.model.ChessPosition
 
 @Composable
 fun ChessBoard(
     boardSize: Int,
+    startPosition: ChessPosition?,
+    endPosition: ChessPosition?,
+    onCellClicked: (row: Int, col: Int) -> Unit
 ){
 
     BoxWithConstraints(
@@ -46,7 +50,7 @@ fun ChessBoard(
                         .size(gridWidth)
                         .clip(MaterialTheme.shapes.small)
                 ){
-                    ChessGrid(boardSize, cellSizeDp)
+                    ChessGrid(boardSize, cellSizeDp, startPosition, endPosition, onCellClicked)
 
                 }
                 Spacer(modifier = Modifier.width(20.dp))

@@ -1,6 +1,7 @@
 package com.savvi.androidassessmentchess.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
@@ -19,10 +20,11 @@ import com.savvi.androidassessmentchess.ui.theme.OffWhite
 @Composable
 fun ChessGrid(
     boardSize: Int,
-    cellSize: Dp
+    cellSize: Dp,
+    startPosition: ChessPosition?,
+    endPosition: ChessPosition?,
+    onCellClicked: (row: Int, col: Int) -> Unit
 ) {
-    val startPosition = ChessPosition(2,2)
-    val endPosition = ChessPosition(5,5)
 
     Column {
         for (row in 0 until boardSize) {
@@ -39,7 +41,8 @@ fun ChessGrid(
                             isStart -> SquareIndicator.Start
                             isEnd -> SquareIndicator.End
                             else -> null
-                        }
+                        },
+                        onClick = { onCellClicked(row,col)}
                     )
                 }
             }
@@ -53,12 +56,14 @@ enum class SquareIndicator { Start, End }
 fun ChessSquare(
     size: Dp,
     isBlack: Boolean,
-    indicator: SquareIndicator?
+    indicator: SquareIndicator?,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
             .size(size)
-            .background(if (isBlack) BlackSquare else OffWhite),
+            .background(if (isBlack) BlackSquare else OffWhite)
+            .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         indicator?.let {
