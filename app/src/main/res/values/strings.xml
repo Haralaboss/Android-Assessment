@@ -3,4 +3,39 @@
     <string name="title">Android Assessment</string>
     <string name="board_settings">SETTINGS</string>
     <string name="board_size">Chessboard Size</string>
+    <string name="settings_max_moves">Max Moves</string>
+
+    <plurals name="moves_amount">
+        <item quantity="one">1 move</item>
+        <item quantity="other">%1$d moves</item>
+    </plurals>
+
+    <string name="settings_path_option">Path Condition</string>
+
+    <plurals name="settings_path_exactly">
+        <item quantity="one">Exactly 1 move</item>
+        <item quantity="other">Exactly %1$d moves</item>
+    </plurals>
+    <plurals name="settings_path_up_to">
+        <item quantity="one">Up to 1 move</item>
+        <item quantity="other">Up to %1$d moves</item>
+    </plurals>
+
+    <string name="paths_title">PATHS FOUND</string>
+    <string name="paths_calculating">Calculating paths on separate thread…</string>
+
+    <string name="paths_selection_start">Tap on the board to set the starting position.</string>
+    <string name="paths_selection_end">Now select the destination (ending position) to calculate paths.</string>
+    <string name="paths_not_found">No solutions found!</string>
+
+    <plurals name="paths_no_valid_paths">
+        <item quantity="one">There are no valid paths of length 1 move for a knight between these positions. Adjust your selections or increase Max Moves.</item>
+        <item quantity="other">There are no valid paths of length %1$d moves for a knight between these positions. Adjust your selections or increase Max Moves.</item>
+    </plurals>
+
+    <string name="reset_board">Reset Board Selection</string>
+    <string name="dialog_warning">"Please, avoid putting more than 10-12 max moves. It could generate an enormous amount of paths."</string>
+    <string name="dialog_error">Please enter a valid positive number</string>
+    <string name="dialog_placeholder">Enter a positive number</string>
+    <string name="dialog_title">Insert max moves</string>
 </resources>

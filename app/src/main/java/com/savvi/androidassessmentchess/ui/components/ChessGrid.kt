@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.sp
 import com.savvi.androidassessmentchess.model.ChessPosition
 import com.savvi.androidassessmentchess.ui.theme.BlackSquare
 import com.savvi.androidassessmentchess.ui.theme.OffWhite
+import com.savvi.androidassessmentchess.ui.theme.PathEndColor
+import com.savvi.androidassessmentchess.ui.theme.PathStartColor
 
 @Composable
 fun ChessGrid(
@@ -67,7 +69,7 @@ fun ChessSquare(
         contentAlignment = Alignment.Center
     ) {
         indicator?.let {
-            val color = if (it == SquareIndicator.Start) Color(0xFF29D94C) else Color(0xFFFC1414)
+            val color = if (it == SquareIndicator.Start) PathStartColor else PathEndColor
             val text = if (it == SquareIndicator.Start) "S" else "E"
 
             Box(

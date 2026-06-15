@@ -1,16 +1,21 @@
 package com.savvi.androidassessmentchess.ui.components
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.savvi.androidassessmentchess.model.ChessPath
 import com.savvi.androidassessmentchess.model.ChessPosition
 
 @Composable
@@ -18,7 +23,8 @@ fun ChessBoard(
     boardSize: Int,
     startPosition: ChessPosition?,
     endPosition: ChessPosition?,
-    onCellClicked: (row: Int, col: Int) -> Unit
+    onCellClicked: (row: Int, col: Int) -> Unit,
+    selectedPath: ChessPath?
 ){
 
     BoxWithConstraints(
@@ -26,10 +32,23 @@ fun ChessBoard(
             .fillMaxWidth()
             .aspectRatio(1f)
             .padding(16.dp)
+            .border(
+                1.dp,
+                Brush.horizontalGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
+                        MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.1f)
+                    )
+                ),
+                RoundedCornerShape(24.dp)
+            )
     ) {
 
         val gridWidth = maxWidth - (20.dp * 2)
         val cellSizeDp = gridWidth / boardSize
+
+        val density = LocalDensity.current
+        val cellSizePx = with(density) {cellSizeDp.toPx()}
 
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -52,6 +71,10 @@ fun ChessBoard(
                 ){
                     ChessGrid(boardSize, cellSizeDp, startPosition, endPosition, onCellClicked)
 
+                    if (selectedPath != null) {
+                        PathOverlay(selectedPath, cellSizePx)
+                        AnimatedKnight(selectedPath, cellSizeDp, cellSizePx)
+                    }
                 }
                 Spacer(modifier = Modifier.width(20.dp))
 

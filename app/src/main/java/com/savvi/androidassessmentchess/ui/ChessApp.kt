@@ -19,6 +19,7 @@ import com.savvi.androidassessmentchess.R
 import com.savvi.androidassessmentchess.ui.components.ChessBoard
 import com.savvi.androidassessmentchess.ui.components.Settings
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.savvi.androidassessmentchess.ui.components.PathList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,6 +30,14 @@ fun ChessApp(
     val boardSize by viewModel.boardSize.collectAsState()
     val startPosition by viewModel.startPosition.collectAsState()
     val endPosition by viewModel.endPosition.collectAsState()
+    val maxMoves by viewModel.maxMoves.collectAsState()
+    val exactlyNMoves by viewModel.exactlyNMoves.collectAsState()
+    val paths by viewModel.paths.collectAsState()
+    val totalPathsCount by viewModel.totalPathsCount.collectAsState()
+    val selectedPath by viewModel.selectedPath.collectAsState()
+    val isCalculating by viewModel.isCalculating.collectAsState()
+
+    val hasActiveSelection = startPosition != null || endPosition != null
 
     Scaffold(
         topBar = {
@@ -69,15 +78,32 @@ fun ChessApp(
                 boardSize = boardSize,
                 startPosition = startPosition,
                 endPosition = endPosition,
-                onCellClicked = {row, col -> viewModel.onCellClicked(row,col)}
+                onCellClicked = {row, col -> viewModel.onCellClicked(row,col)},
+                selectedPath = selectedPath
+            )
+
+            PathList(
+                paths = paths,
+                totalPathsCount = totalPathsCount,
+                selectedPath = selectedPath,
+                isCalculating = isCalculating,
+                boardSize = boardSize,
+                maxMoves = maxMoves,
+                startPositionSet = startPosition != null,
+                endPositionSet = endPosition != null,
+                onPathSelected = { path -> viewModel.selectPath(path) }
             )
 
             Settings(
                 boardSize = boardSize,
-                onBoardSizeChanged = { viewModel.onBoardSizeChanged(it)}
-            )
+                onBoardSizeChanged = { viewModel.onBoardSizeChanged(it)},
+                maxMoves = maxMoves,
+                onMaxMovesChanged = { viewModel.onMaxMovesChanged(it) },
+                exactlyNMoves = exactlyNMoves,
+                onExactlyNMovesChanged = { viewModel.onExactlyNMovesChanged(it) },
+                onResetClicked = { viewModel.resetBoardState() },
+                hasActiveSelection = hasActiveSelection
+                )
         }
-
-
     }
 }
